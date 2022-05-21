@@ -96,4 +96,18 @@ class ProductController extends Controller
             ],Response::HTTP_NOT_FOUND);
         }
     }
+
+    /**
+     * Search for a name
+     *
+     * @param string $name
+     * @return AnonymousResourceCollection
+     */
+    public function search(string $name): AnonymousResourceCollection
+    {
+
+        $products = Product::where('name', 'like', '%'.$name.'%')->get();
+        return ProductResource::collection($products);
+
+    }
 }

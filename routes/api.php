@@ -21,6 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 
 Route::apiResource('products',ProductController::class);
+Route::get('/products/search/{name}',[ProductController::class, 'search']);
 
 
 //Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
