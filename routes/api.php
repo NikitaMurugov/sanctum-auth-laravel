@@ -20,10 +20,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 
 
-Route::apiResource('products',ProductController::class);
+//Route::apiResource('products',ProductController::class);
+Route::get('/products',[ProductController::class, 'index']);
+Route::get('/products/{product}',[ProductController::class, 'show']);
 Route::get('/products/search/{name}',[ProductController::class, 'search']);
 
-
-//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
+Route::group(['prefix'=>'products', 'middleware'=>'auth:sanctum'], function () {
+    Route::post('{product}',[ProductController::class, 'show']);
+    Route::match(array('PUT', 'PATCH'),'{product}',[ProductController::class, 'update']);
+    Route::delete('{product}',[ProductController::class, 'destroy']);
+});
